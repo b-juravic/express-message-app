@@ -16,9 +16,21 @@ const BCRYPT_WORK_FACTOR = 12;
 
 const CURRENT_TIME = moment().format();
 
+// HTTP status codes
+const BAD_REQUEST = 400;
+const NOT_FOUND = 404;
+const SERVER_ERROR = 500;
+const CREATED = 201;
+const STATUS_OK = 200;
+
 module.exports = {
   DB_URI,
   SECRET_KEY,
   BCRYPT_WORK_FACTOR,
   CURRENT_TIME,
+  BAD_REQUEST,
+  NOT_FOUND,
+  SERVER_ERROR,
+  CREATED,
+  STATUS_OK,
 };
