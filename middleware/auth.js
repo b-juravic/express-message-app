@@ -19,6 +19,7 @@ function authenticateJWT(req, res, next) {
 /** Middleware: Requires user is authenticated. */
 
 function ensureLoggedIn(req, res, next) {
+  console.log("req.user", req.user);
   if (!req.user) {
     return next({ status: 401, message: "Unauthorized" });
   } else {
@@ -30,6 +31,9 @@ function ensureLoggedIn(req, res, next) {
 
 function ensureCorrectUser(req, res, next) {
   try {
+    console.log("HERE");
+    console.log("req.user.username", req.user.username);
+    console.log("req.params.username", req.params.username);
     if (req.user.username === req.params.username) {
       return next();
     } else {
@@ -45,5 +49,5 @@ function ensureCorrectUser(req, res, next) {
 module.exports = {
   authenticateJWT,
   ensureLoggedIn,
-  ensureCorrectUser
+  ensureCorrectUser,
 };

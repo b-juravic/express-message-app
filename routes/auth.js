@@ -4,6 +4,7 @@ const { SECRET_KEY, BAD_REQUEST } = require("../config");
 const router = new express.Router();
 const User = require("../models/user");
 const ExpressError = require("../expressError");
+const { authenticateJWT } = require("../middleware/auth");
 
 /** POST /login - login: {username, password} => {token}
  *
@@ -18,13 +19,11 @@ router.post("/login", async function (req, res, next) {
     if (userAuthenticated) {
       let token = jwt.sign({ username }, SECRET_KEY);
       User.updateLoginTimestamp(username);
-
       return res.json({ token });
     }
 
     throw new ExpressError("Invalid uername/password", BAD_REQUEST);
-
-  } catch(err) {
+  } catch (err) {
     return next(err);
   }
 });
@@ -36,21 +35,26 @@ router.post("/login", async function (req, res, next) {
  *  Make sure to update their last-login!
  */
 
- router.post("/register", async function (req, res, next) {
-   try {
-     const { username, password, first_name, last_name, phone } = req.body;
+router.post("/register", async function (req, res, next) {
+  try {
+    const { username, password, first_name, last_name, phone } = req.body;
 
-     let registeredUser = await User.register({username, password, first_name, last_name, phone});
+    let registeredUser = await User.register({
+      username,
+      password,
+      first_name,
+      last_name,
+      phone,
+    });
 
-     let token = jwt.sign({ username }, SECRET_KEY);
+    let token = jwt.sign({ username }, SECRET_KEY);
 
-     User.updateLoginTimstamp(username);
+    User.updateLoginTimestamp(username);
 
-     return res.json({ token });
+    return res.json({ token });
+  } catch (err) {
+    return next(err);
+  }
+});
 
-   } catch(err) {
-     return next(err);
-   }
- });
-
- module.exports = router;
+module.exports = router;

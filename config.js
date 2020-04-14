@@ -18,6 +18,7 @@ const CURRENT_TIME = moment().format();
 
 // HTTP status codes
 const BAD_REQUEST = 400;
+const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
 const SERVER_ERROR = 500;
 const CREATED = 201;
@@ -29,6 +30,7 @@ module.exports = {
   BCRYPT_WORK_FACTOR,
   CURRENT_TIME,
   BAD_REQUEST,
+  UNAUTHORIZED,
   NOT_FOUND,
   SERVER_ERROR,
   CREATED,
